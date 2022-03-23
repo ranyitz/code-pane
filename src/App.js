@@ -4,19 +4,18 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import domtoimage from "dom-to-image";
 import { saveAs } from "file-saver";
 
-const codeString = `import reportWebVitals from './reportWebVitals';
-
-  ReactDOM.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-    document.getElementById('root')
-  );
-  
-  // If you want to start measuring performance in your app, pass a function
-  // to log results (for example: reportWebVitals(console.log))
-  // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-  reportWebVitals();`;
+const codeString = `function Foo() {
+  this.a = 1;
+  this.b = 2;
+}
+ 
+Foo.prototype.c = 3;
+ 
+_.values(new Foo);
+// => [1, 2] (iteration order is not guaranteed)
+ 
+_.values('hi');
+// => ['h', 'i']`;
 
 const Component = () => {
   const [code, setCode] = useState(codeString);
@@ -25,20 +24,6 @@ const Component = () => {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <textarea
-          style={{ width: "800px", height: "300px" }}
-          height="500"
-          value={code}
-          onChange={(e) => setCode(e.currentTarget.value)}
-        />
-      </div>
       <div
         id="export-container"
         style={{
@@ -79,6 +64,9 @@ const Component = () => {
                 }
 
                 setHighlightedLines(highlightedLines);
+
+                // A hack to re-render the lines after each change
+                // for some reason only code changes trigger a re-render
                 if (toggle) {
                   setCode(code + " ");
                   setToggle(false);
@@ -93,6 +81,20 @@ const Component = () => {
           {code}
         </SyntaxHighlighter>
       </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <textarea
+          style={{ width: "800px", height: "300px" }}
+          height="500"
+          value={code}
+          onChange={(e) => setCode(e.currentTarget.value)}
+        />
+      </div>
     </div>
   );
 };
@@ -100,30 +102,40 @@ const Component = () => {
 function App() {
   return (
     <div>
-      <h1>Syntax highlighter</h1>
-      <button
-        onClick={async () => {
-          const node = document.getElementById("export-container");
-          const exportSize = 4;
-
-          const width = node.offsetWidth * exportSize;
-          const height = node.offsetHeight * exportSize;
-
-          const png = await domtoimage.toPng(node, {
-            style: {
-              transform: `scale(${exportSize})`,
-              "transform-origin": "center",
-              background: "none",
-            },
-            width,
-            height,
-          });
-
-          saveAs(png, "my-node.png");
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        Export
-      </button>
+        <h1>Code Pane</h1>
+        <p>Click on lines to highlight them</p>
+        <button
+          onClick={async () => {
+            const node = document.getElementById("export-container");
+            const exportSize = 4;
+
+            const width = node.offsetWidth * exportSize;
+            const height = node.offsetHeight * exportSize;
+
+            const png = await domtoimage.toPng(node, {
+              style: {
+                transform: `scale(${exportSize})`,
+                "transform-origin": "center",
+                background: "none",
+              },
+              width,
+              height,
+            });
+
+            saveAs(png, "code.png");
+          }}
+        >
+          Export
+        </button>
+        <br />
+      </div>
       <Component />
     </div>
   );
