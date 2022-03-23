@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ranyitz/code-pane/static/css/main.e6c13ad2.css",
-    "main.js": "/ranyitz/code-pane/static/js/main.1e17c7f5.js",
+    "main.js": "/ranyitz/code-pane/static/js/main.873480ce.js",
     "static/js/787.e1993ee7.chunk.js": "/ranyitz/code-pane/static/js/787.e1993ee7.chunk.js",
     "index.html": "/ranyitz/code-pane/index.html",
     "main.e6c13ad2.css.map": "/ranyitz/code-pane/static/css/main.e6c13ad2.css.map",
-    "main.1e17c7f5.js.map": "/ranyitz/code-pane/static/js/main.1e17c7f5.js.map",
+    "main.873480ce.js.map": "/ranyitz/code-pane/static/js/main.873480ce.js.map",
     "787.e1993ee7.chunk.js.map": "/ranyitz/code-pane/static/js/787.e1993ee7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.1e17c7f5.js"
+    "static/js/main.873480ce.js"
   ]
 }
