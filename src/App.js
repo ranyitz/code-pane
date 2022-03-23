@@ -20,6 +20,8 @@ const codeString = `import reportWebVitals from './reportWebVitals';
 
 const Component = () => {
   const [code, setCode] = useState(codeString);
+  const [highlightedLines, setHighlightedLines] = useState(new Set());
+  const [toggle, setToggle] = useState(true);
 
   return (
     <div>
@@ -49,11 +51,43 @@ const Component = () => {
           language="javascript"
           id="code"
           style={tomorrow}
+          customStyle={{
+            minHeight: "200px",
+            minWidth: "400px",
+          }}
           wrapLines={true}
           showLineNumbers={true}
           lineProps={(number) => {
-            if (number === 7 || number === 1) return { style: { opacity: 1 } };
-            return { style: { opacity: 0.3 } };
+            console.log(`render line ${number}`);
+            let opacity;
+
+            if (highlightedLines.size === 0) {
+              opacity = 1;
+            } else if (highlightedLines.has(number)) {
+              opacity = 1;
+            } else {
+              opacity = 0.3;
+            }
+
+            return {
+              style: { opacity, cursor: "pointer" },
+              onClick: () => {
+                if (highlightedLines.has(number)) {
+                  highlightedLines.delete(number);
+                } else {
+                  highlightedLines.add(number);
+                }
+
+                setHighlightedLines(highlightedLines);
+                if (toggle) {
+                  setCode(code + " ");
+                  setToggle(false);
+                } else {
+                  setCode(code.slice(0, -1));
+                  setToggle(true);
+                }
+              },
+            };
           }}
         >
           {code}
