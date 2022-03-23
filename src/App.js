@@ -25,62 +25,72 @@ const Component = () => {
   return (
     <div>
       <div
-        id="export-container"
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <SyntaxHighlighter
-          language="javascript"
-          id="code"
-          style={tomorrow}
-          customStyle={{
-            minHeight: "200px",
-            minWidth: "400px",
-          }}
-          wrapLines={true}
-          showLineNumbers={true}
-          lineProps={(number) => {
-            console.log(`render line ${number}`);
-            let opacity;
-
-            if (highlightedLines.size === 0) {
-              opacity = 1;
-            } else if (highlightedLines.has(number)) {
-              opacity = 1;
-            } else {
-              opacity = 0.3;
-            }
-
-            return {
-              style: { opacity, cursor: "pointer" },
-              onClick: () => {
-                if (highlightedLines.has(number)) {
-                  highlightedLines.delete(number);
-                } else {
-                  highlightedLines.add(number);
-                }
-
-                setHighlightedLines(highlightedLines);
-
-                // A hack to re-render the lines after each change
-                // for some reason only code changes trigger a re-render
-                if (toggle) {
-                  setCode(code + " ");
-                  setToggle(false);
-                } else {
-                  setCode(code.slice(0, -1));
-                  setToggle(true);
-                }
-              },
-            };
+        <div
+          id="export-container"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {code}
-        </SyntaxHighlighter>
+          <SyntaxHighlighter
+            language="javascript"
+            id="code"
+            style={tomorrow}
+            customStyle={{
+              minHeight: "200px",
+              minWidth: "400px",
+              margin: "0 0",
+            }}
+            wrapLines={true}
+            showLineNumbers={true}
+            lineProps={(number) => {
+              console.log(`render line ${number}`);
+              let opacity;
+
+              if (highlightedLines.size === 0) {
+                opacity = 1;
+              } else if (highlightedLines.has(number)) {
+                opacity = 1;
+              } else {
+                opacity = 0.3;
+              }
+
+              return {
+                style: { opacity, cursor: "pointer" },
+                onClick: () => {
+                  if (highlightedLines.has(number)) {
+                    highlightedLines.delete(number);
+                  } else {
+                    highlightedLines.add(number);
+                  }
+
+                  setHighlightedLines(highlightedLines);
+
+                  // A hack to re-render the lines after each change
+                  // for some reason only code changes trigger a re-render
+                  if (toggle) {
+                    setCode(code + " ");
+                    setToggle(false);
+                  } else {
+                    setCode(code.slice(0, -1));
+                    setToggle(true);
+                  }
+                },
+              };
+            }}
+          >
+            {code}
+          </SyntaxHighlighter>
+        </div>
       </div>
+      <br />
       <div
         style={{
           display: "flex",
