@@ -28,8 +28,8 @@ export const CodeViewer = ({ code }) => {
           id="code"
           style={tomorrow}
           customStyle={{
-            minHeight: "200px",
-            minWidth: "400px",
+            minHeight: "20px",
+            minWidth: "40px",
             margin: "0 0",
           }}
           wrapLines={true}

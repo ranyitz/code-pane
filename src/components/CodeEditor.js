@@ -8,8 +8,7 @@ export const CodeEditor = ({ code, setCode }) => {
       }}
     >
       <textarea
-        style={{ width: "800px", height: "300px" }}
-        height="500"
+        style={{ width: "540px", height: "200px" }}
         value={code}
         onChange={(e) => setCode(e.currentTarget.value)}
       />
